@@ -1,0 +1,11 @@
+Venne\Widgets\WidgetManager::__set_state(array(
+	'container' => VenneTests\Widgets\Container::__set_state(array(
+		'meta' => array('tags' => array('venne.widget' => array('myService' => 'foo'))),
+		'parameters' => array(),
+		'registry' => array(
+			'myService' => VenneTests\Widgets\MyControlFactory::__set_state(array()),
+		),
+		'creating' => NULL,
+	)),
+	'widgets' => array('foo' => 'myService', 'bar' => 'myService'),
+))
