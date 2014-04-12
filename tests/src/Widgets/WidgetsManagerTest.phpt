@@ -64,13 +64,27 @@ class WidgetManagerTest extends TestCase
 
 	public function testGetWidget()
 	{
+		$this->widgetManager->addWidget('my', function() {
+			return new MyControl;
+		});
+
 		Assert::type(__NAMESPACE__ . '\MyControl', $this->widgetManager->getWidget('foo'));
+		Assert::type(__NAMESPACE__ . '\MyControl', $this->widgetManager->getWidget('my'));
 		Assert::exception(function(){
 			$this->widgetManager->getWidget('bad');
 		}, 'Nette\InvalidStateException', "Widget is not instance of 'Nette\Application\UI\Control'.");
 		Assert::exception(function(){
 			$this->widgetManager->getWidget('bad2');
 		}, 'Nette\InvalidStateException', "Service is not factory.");
+		Assert::exception(function(){
+			$this->widgetManager->getWidget('fooo');
+		}, 'Nette\InvalidArgumentException', "Widget fooo does not exists");
+	}
+
+
+	public function testGetWidgets()
+	{
+		Assert::same(array('foo' => 'myService', 'bad' => 'badService', 'bad2' => 'badService2'), $this->widgetManager->getWidgets());
 	}
 
 }
