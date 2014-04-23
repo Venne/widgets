@@ -45,12 +45,10 @@ class WidgetsControlTraitTest extends TestCase
 
 	public function testCreateComponent()
 	{
-		Assert::type(__NAMESPACE__ . '\MyControl', $this->control['foo']);
-		Assert::type(__NAMESPACE__ . '\BarControl', $this->control['bar']);
-		Assert::type(__NAMESPACE__ . '\BarControl', $this->control['test']);
-		Assert::exception(function () {
-			$this->control['error'];
-		}, 'Nette\InvalidArgumentException', "Component or widget with name 'error' does not exist.");
+		Assert::type(__NAMESPACE__ . '\MyControl', $this->control->createComponent('foo'));
+		Assert::type(__NAMESPACE__ . '\BarControl', $this->control->createComponent('bar'));
+		Assert::type(__NAMESPACE__ . '\BarControl', $this->control->createComponent('test'));
+		Assert::same(NULL, $this->control->createComponent('error'));
 	}
 
 
@@ -83,7 +81,15 @@ class MyControlFactory
 class Control extends \Nette\Application\UI\Control
 {
 
-	use WidgetsControlTrait;
+	use WidgetsControlTrait {
+		createComponent as cc;
+	}
+
+
+	public function createComponent($name)
+	{
+		return $this->cc($name);
+	}
 
 
 	protected function createComponentBar()

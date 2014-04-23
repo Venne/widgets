@@ -44,19 +44,16 @@ trait WidgetsControlTrait
 	/**
 	 * @param $name
 	 * @return \Nette\Application\UI\Control
-	 * @throws \Nette\InvalidArgumentException
 	 */
 	protected function createComponent($name)
 	{
-		if (($control = parent::createComponent($name)) == TRUE) {
+		if ($control = parent::createComponent($name)) {
 			return $control;
 		}
 
 		if ($this->widgetManager && $this->widgetManager->hasWidget($name)) {
 			return $this->widgetManager->getWidget($name);
 		}
-
-		throw new InvalidArgumentException("Component or widget with name '$name' does not exist.");
 	}
 
 }
