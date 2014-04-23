@@ -9,7 +9,7 @@
  * the file license.txt that was distributed with this source code.
  */
 
-namespace Venne\Widgets;
+namespace Venne\Widgets\DI;
 
 use Nette\DI\CompilerExtension;
 
@@ -18,6 +18,9 @@ use Nette\DI\CompilerExtension;
  */
 class WidgetsExtension extends CompilerExtension
 {
+
+	const WIDGET_TAG = 'venne.widget';
+
 
 	public function loadConfiguration()
 	{
@@ -33,9 +36,9 @@ class WidgetsExtension extends CompilerExtension
 		$container = $this->getContainerBuilder();
 		$config = $container->getDefinition($this->prefix('widgetManager'));
 
-		foreach ($container->findByTag('venne.widget') as $factory => $meta) {
+		foreach ($container->findByTag(static::WIDGET_TAG) as $factory => $meta) {
 			if (!is_string($meta)) {
-				throw new \Nette\InvalidArgumentException("Tag venne.widget require name. Provide it in configuration. (tags: [venne.widget: name])");
+				throw new \Nette\InvalidArgumentException("Tag " . static::WIDGET_TAG . " require name. Provide it in configuration. (tags: [venne.widget: name])");
 			}
 			$config->addSetup('addWidget', array($meta, $factory));
 		}
