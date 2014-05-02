@@ -28,6 +28,9 @@ class WidgetsExtension extends CompilerExtension
 
 		$container->addDefinition($this->prefix('widgetManager'))
 			->setClass('Venne\Widgets\WidgetManager');
+
+		$container->addDefinition($this->prefix('widgetManagerFactory'))
+			->setImplement('Venne\Widgets\IWidgetManagerFactory');
 	}
 
 
