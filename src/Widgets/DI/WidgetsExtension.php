@@ -19,7 +19,7 @@ use Nette\DI\CompilerExtension;
 class WidgetsExtension extends CompilerExtension
 {
 
-	const WIDGET_TAG = 'venne.widget';
+	const TAG_WIDGET = 'venne.widget';
 
 
 	public function loadConfiguration()
@@ -39,9 +39,9 @@ class WidgetsExtension extends CompilerExtension
 		$container = $this->getContainerBuilder();
 		$config = $container->getDefinition($this->prefix('widgetManager'));
 
-		foreach ($container->findByTag(static::WIDGET_TAG) as $factory => $meta) {
+		foreach ($container->findByTag(static::TAG_WIDGET) as $factory => $meta) {
 			if (!is_string($meta)) {
-				throw new \Nette\InvalidArgumentException("Tag " . static::WIDGET_TAG . " require name. Provide it in configuration. (tags: [venne.widget: name])");
+				throw new \Nette\InvalidArgumentException("Tag " . static::TAG_WIDGET . " require name. Provide it in configuration. (tags: [venne.widget: name])");
 			}
 			$config->addSetup('addWidget', array($meta, $factory));
 		}
