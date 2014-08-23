@@ -11,49 +11,44 @@
 
 namespace Venne\Widgets;
 
-use Nette\InvalidArgumentException;
-
 /**
  * @author Josef Kříž <pepakriz@gmail.com>
  */
 trait WidgetsControlTrait
 {
 
-	/** @var WidgetManager|NULL */
+	/** @var \Venne\Widgets\WidgetManager|null */
 	private $widgetManager;
 
-
 	/**
-	 * @param WidgetManager $widgetManager
+	 * @param \Venne\Widgets\WidgetManager $widgetManager
 	 */
 	public function injectWidgetManager(WidgetManager $widgetManager)
 	{
 		$this->widgetManager = $widgetManager;
 	}
 
-
 	/**
-	 * @return WidgetManager|NULL
+	 * @return \Venne\Widgets\WidgetManager|null
 	 */
 	public function getWidgetManager()
 	{
 		return $this->widgetManager;
 	}
 
-
 	/**
-	 * @param $name
+	 * @param string $name
 	 * @return \Nette\Application\UI\Control
 	 */
 	protected function createComponent($name)
 	{
-		if ($control = parent::createComponent($name)) {
-			return $control;
+		$control = parent::createComponent($name);
+
+		if ($control === null && $this->widgetManager && $this->widgetManager->hasWidget($name)) {
+			$control = $this->widgetManager->getWidget($name);
 		}
 
-		if ($this->widgetManager && $this->widgetManager->hasWidget($name)) {
-			return $this->widgetManager->getWidget($name);
-		}
+		return $control;
 	}
 
 }

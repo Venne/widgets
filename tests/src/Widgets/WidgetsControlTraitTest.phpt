@@ -27,7 +27,6 @@ class WidgetsControlTraitTest extends TestCase
 	/** @var \Nette\Application\UI\Control */
 	private $control;
 
-
 	public function setUp()
 	{
 		$container = new Container;
@@ -42,15 +41,13 @@ class WidgetsControlTraitTest extends TestCase
 
 	}
 
-
 	public function testCreateComponent()
 	{
 		Assert::type(__NAMESPACE__ . '\MyControl', $this->control->createComponent('foo'));
 		Assert::type(__NAMESPACE__ . '\BarControl', $this->control->createComponent('bar'));
 		Assert::type(__NAMESPACE__ . '\BarControl', $this->control->createComponent('test'));
-		Assert::same(NULL, $this->control->createComponent('error'));
+		Assert::same(null, $this->control->createComponent('error'));
 	}
-
 
 	public function testGetWidgetManager()
 	{
@@ -85,18 +82,15 @@ class Control extends \Nette\Application\UI\Control
 		createComponent as cc;
 	}
 
-
 	public function createComponent($name)
 	{
 		return $this->cc($name);
 	}
 
-
 	protected function createComponentBar()
 	{
 		return new BarControl;
 	}
-
 
 	protected function createComponentTest()
 	{

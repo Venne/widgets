@@ -18,7 +18,7 @@ interface IWidgetManagerFactory
 {
 
 	/**
-	 * @return WidgetManager
+	 * @return \Venne\Widgets\WidgetManager
 	 */
 	public function create();
 

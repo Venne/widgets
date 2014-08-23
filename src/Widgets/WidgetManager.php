@@ -15,35 +15,30 @@ use Nette\Application\UI\Control;
 use Nette\DI\Container;
 use Nette\InvalidArgumentException;
 use Nette\InvalidStateException;
-use Nette\Object;
 
 /**
  * @author Josef Kříž <pepakriz@gmail.com>
  */
-class WidgetManager extends Object
+class WidgetManager extends \Nette\Object
 {
 
-	/** @var Container */
+	/** @var \Nette\DI\Container */
 	private $container;
 
-	/** @var Callback[] */
+	/** @var string[] */
 	private $widgets = array();
 
-
 	/**
-	 * @param Container $container
+	 * @param \Nette\DI\Container $container
 	 */
 	public function __construct(Container $container)
 	{
 		$this->container = $container;
 	}
 
-
 	/**
-	 * @param $name
-	 * @param $factory
-	 * @return $this
-	 * @throws \Nette\InvalidArgumentException
+	 * @param string $name
+	 * @param string $factory
 	 */
 	public function addWidget($name, $factory)
 	{
@@ -60,9 +55,7 @@ class WidgetManager extends Object
 		}
 
 		$this->widgets[$name] = $factory;
-		return $this;
 	}
-
 
 	/**
 	 * @param string $name
@@ -73,21 +66,17 @@ class WidgetManager extends Object
 		return isset($this->widgets[$name]);
 	}
 
-
 	/**
-	 * @return \Callback[]
+	 * @return string[]
 	 */
-	public function getWidgets()
+	public function getWidgetNames()
 	{
-		return $this->widgets;
+		return array_keys($this->widgets);
 	}
 
-
 	/**
-	 * @param $name
-	 * @return mixed
-	 * @throws \Nette\InvalidStateException
-	 * @throws \Nette\InvalidArgumentException
+	 * @param string $name
+	 * @return \Nette\Application\UI\Control
 	 */
 	public function getWidget($name)
 	{

@@ -21,7 +21,6 @@ class WidgetsExtension extends CompilerExtension
 
 	const TAG_WIDGET = 'venne.widget';
 
-
 	public function loadConfiguration()
 	{
 		$container = $this->getContainerBuilder();
@@ -32,7 +31,6 @@ class WidgetsExtension extends CompilerExtension
 		$container->addDefinition($this->prefix('widgetManagerFactory'))
 			->setImplement('Venne\Widgets\IWidgetManagerFactory');
 	}
-
 
 	public function beforeCompile()
 	{
