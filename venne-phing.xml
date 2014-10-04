@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="venne/widgets" default="build">
+
+	<property name="path.venne.widgets.tester.executable" value="${path.bin}/tester"/>
+	<property name="path.venne.widgets.phpcs.executable" value="${path.bin}/phpcs"/>
+	<property name="path.venne.widgets.root" value="${path.vendor}/venne/widgets"/>
+	<property name="path.venne.widgets.build" value="${path.venne.widgets.root}/build"/>
+	<property name="path.venne.widgets.src" value="${path.venne.widgets.root}/src"/>
+	<property name="path.venne.widgets.tests" value="${path.venne.widgets.root}/tests"/>
+	<property name="path.venne.widgets.phpcs.ruleset" value="${path.venne.widgets.build}/ruleset.xml"/>
+
+	<target name="build">
+	</target>
+
+	<target name="rebuild">
+		<phingcall target="build" />
+	</target>
+
+	<target name="check" depends="check-php,tester"/>
+
+	<target name="check-php" depends="phpcs"/>
+
+	<target name="phpcs">
+		<exec
+				executable="${path.venne.widgets.phpcs.executable}"
+				logoutput="true"
+				passthru="true"
+				checkreturn="true"
+				>
+			<arg value="--standard=${path.venne.widgets.phpcs.ruleset}"/>
+			<arg value="--extensions=php"/>
+			<arg value="--encoding=utf-8"/>
+			<arg value="--tab-width=4"/>
+			<arg value="-sp"/>
+			<arg path="${path.venne.widgets.src}"/>
+		</exec>
+	</target>
+
+	<target name="tester">
+		<exec
+				executable="${path.venne.widgets.tester.executable}"
+				logoutput="true"
+				passthru="true"
+				checkreturn="true"
+				>
+			<arg path="${path.venne.widgets.tests}"/>
+			<arg value="-s"/>
+			<arg value="-c"/>
+			<arg value="${path.venne.widgets.tests}/php-unix.ini"/>
+		</exec>
+	</target>
+
+</project>
