@@ -81,7 +81,7 @@ class WidgetManagerTest extends TestCase
 		}, 'Nette\InvalidStateException', "Service is not factory.");
 		Assert::exception(function () {
 			$this->widgetManager->getWidget('fooo');
-		}, 'Nette\InvalidArgumentException', "Widget fooo does not exists");
+		}, 'Nette\InvalidArgumentException', 'Widget \'fooo\' does not exists');
 	}
 
 	public function testGetWidgets()

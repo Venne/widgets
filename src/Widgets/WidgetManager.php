@@ -51,7 +51,7 @@ class WidgetManager extends \Nette\Object
 		}
 
 		if (is_string($factory) && !$this->container->hasService($factory)) {
-			throw new InvalidArgumentException("Service '$factory' does not exist");
+			throw new InvalidArgumentException(sprintf('Service \'%s\' does not exist', $factory));
 		}
 
 		$this->widgets[$name] = $factory;
@@ -81,7 +81,7 @@ class WidgetManager extends \Nette\Object
 	public function getWidget($name)
 	{
 		if (!$this->hasWidget($name)) {
-			throw new InvalidArgumentException("Widget $name does not exists");
+			throw new InvalidArgumentException(sprintf('Widget \'%s\' does not exists', $name));
 		}
 
 		$factory = $this->widgets[$name];
@@ -101,11 +101,10 @@ class WidgetManager extends \Nette\Object
 		}
 
 		if (!$widget instanceof Control) {
-			throw new InvalidStateException("Widget is not instance of 'Nette\Application\UI\Control'.");
+			throw new InvalidStateException('Widget is not instance of \'Nette\Application\UI\Control\'.');
 		}
 
 		return $widget;
 	}
 
 }
-

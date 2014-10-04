@@ -39,11 +39,10 @@ class WidgetsExtension extends CompilerExtension
 
 		foreach ($container->findByTag(static::TAG_WIDGET) as $factory => $meta) {
 			if (!is_string($meta)) {
-				throw new \Nette\InvalidArgumentException("Tag " . static::TAG_WIDGET . " require name. Provide it in configuration. (tags: [venne.widget: name])");
+				throw new \Nette\InvalidArgumentException(sprintf('Tag %s require name. Provide it in configuration. (tags: [venne.widget: name])', static::TAG_WIDGET));
 			}
 			$config->addSetup('addWidget', array($meta, $factory));
 		}
 	}
 
 }
-

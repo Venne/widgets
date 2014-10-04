@@ -23,4 +23,3 @@ interface IWidgetManagerFactory
 	public function create();
 
 }
-
