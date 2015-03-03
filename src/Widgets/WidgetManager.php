@@ -11,6 +11,7 @@
 
 namespace Venne\Widgets;
 
+use Nette;
 use Nette\Application\UI\Control;
 use Nette\DI\Container;
 use Nette\InvalidArgumentException;
@@ -19,7 +20,7 @@ use Nette\InvalidStateException;
 /**
  * @author Josef Kříž <pepakriz@gmail.com>
  */
-class WidgetManager extends \Nette\Object
+class WidgetManager extends Nette\Object
 {
 
 	/** @var \Nette\DI\Container */
@@ -101,7 +102,7 @@ class WidgetManager extends \Nette\Object
 		}
 
 		if (!$widget instanceof Control) {
-			throw new InvalidStateException('Widget is not instance of \'Nette\Application\UI\Control\'.');
+			throw new InvalidStateException(sprintf('Widget is not instance of \'%s\'.', Control::class));
 		}
 
 		return $widget;

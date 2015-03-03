@@ -11,6 +11,7 @@
 
 namespace VenneTests\Widgets;
 
+use Nette;
 use Tester\Assert;
 use Tester\TestCase;
 use Venne\Widgets\WidgetManager;
@@ -43,25 +44,25 @@ class WidgetsControlTraitTest extends TestCase
 
 	public function testCreateComponent()
 	{
-		Assert::type(__NAMESPACE__ . '\MyControl', $this->control->createComponent('foo'));
-		Assert::type(__NAMESPACE__ . '\BarControl', $this->control->createComponent('bar'));
-		Assert::type(__NAMESPACE__ . '\BarControl', $this->control->createComponent('test'));
+		Assert::type(MyControl::class, $this->control->createComponent('foo'));
+		Assert::type(BarControl::class, $this->control->createComponent('bar'));
+		Assert::type(BarControl::class, $this->control->createComponent('test'));
 		Assert::same(null, $this->control->createComponent('error'));
 	}
 
 	public function testGetWidgetManager()
 	{
-		Assert::type('Venne\Widgets\WidgetManager', $this->control->getWidgetManager());
+		Assert::type(WidgetManager::class, $this->control->getWidgetManager());
 	}
 
 }
 
-class MyControl extends \Nette\Application\UI\Control
+class MyControl extends Nette\Application\UI\Control
 {
 
 }
 
-class BarControl extends \Nette\Application\UI\Control
+class BarControl extends Nette\Application\UI\Control
 {
 
 }
@@ -75,7 +76,7 @@ class MyControlFactory
 	}
 }
 
-class Control extends \Nette\Application\UI\Control
+class Control extends Nette\Application\UI\Control
 {
 
 	use WidgetsControlTrait {
@@ -99,7 +100,7 @@ class Control extends \Nette\Application\UI\Control
 
 }
 
-class Container extends \Nette\DI\Container
+class Container extends Nette\DI\Container
 {
 
 	public $meta = array();

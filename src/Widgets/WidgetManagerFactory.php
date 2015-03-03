@@ -14,7 +14,7 @@ namespace Venne\Widgets;
 /**
  * @author Josef Kříž <pepakriz@gmail.com>
  */
-interface IWidgetManagerFactory
+interface WidgetManagerFactory
 {
 
 	/**

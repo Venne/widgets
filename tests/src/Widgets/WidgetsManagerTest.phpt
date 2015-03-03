@@ -11,6 +11,7 @@
 
 namespace VenneTests\Widgets;
 
+use Nette;
 use Nette\Application\UI\Control;
 use Tester\Assert;
 use Tester\TestCase;
@@ -46,15 +47,15 @@ class WidgetManagerTest extends TestCase
 	{
 		Assert::exception(function () {
 			$this->widgetManager->addWidget(1, 2);
-		}, 'Nette\InvalidArgumentException', 'Name of widget must be string');
+		}, Nette\InvalidArgumentException::class, 'Name of widget must be string');
 
 		Assert::exception(function () {
 			$this->widgetManager->addWidget('foo', 2);
-		}, 'Nette\InvalidArgumentException', 'Second argument must be string or factory or callable');
+		}, Nette\InvalidArgumentException::class, 'Second argument must be string or factory or callable');
 
 		Assert::exception(function () {
-			Assert::type('Venne\Widgets\WidgetManager', $this->widgetManager->addWidget('foo', 'myService2'));
-		}, 'Nette\InvalidArgumentException', 'Service \'myService2\' does not exist');
+			Assert::type(WidgetManager::class, $this->widgetManager->addWidget('foo', 'myService2'));
+		}, Nette\InvalidArgumentException::class, 'Service \'myService2\' does not exist');
 
 		$this->widgetManager->addWidget('foo', 'myService');
 		$this->widgetManager->addWidget('foo', function () {
@@ -71,17 +72,17 @@ class WidgetManagerTest extends TestCase
 			return new MyControl;
 		});
 
-		Assert::type(__NAMESPACE__ . '\MyControl', $this->widgetManager->getWidget('foo'));
-		Assert::type(__NAMESPACE__ . '\MyControl', $this->widgetManager->getWidget('my'));
+		Assert::type(MyControl::class, $this->widgetManager->getWidget('foo'));
+		Assert::type(MyControl::class, $this->widgetManager->getWidget('my'));
 		Assert::exception(function () {
 			$this->widgetManager->getWidget('bad');
-		}, 'Nette\InvalidStateException', "Widget is not instance of 'Nette\Application\UI\Control'.");
+		}, Nette\InvalidStateException::class, 'Widget is not instance of \'' . Control::class . '\'.');
 		Assert::exception(function () {
 			$this->widgetManager->getWidget('bad2');
-		}, 'Nette\InvalidStateException', "Service is not factory.");
+		}, Nette\InvalidStateException::class, 'Service is not factory.');
 		Assert::exception(function () {
 			$this->widgetManager->getWidget('fooo');
-		}, 'Nette\InvalidArgumentException', 'Widget \'fooo\' does not exists');
+		}, Nette\InvalidArgumentException::class, 'Widget \'fooo\' does not exists');
 	}
 
 	public function testGetWidgets()
@@ -119,7 +120,7 @@ class BadControlFactory2
 
 }
 
-class Container extends \Nette\DI\Container
+class Container extends Nette\DI\Container
 {
 
 	public $meta = array();

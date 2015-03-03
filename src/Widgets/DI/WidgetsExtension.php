@@ -12,6 +12,9 @@
 namespace Venne\Widgets\DI;
 
 use Nette\DI\CompilerExtension;
+use Nette\InvalidArgumentException;
+use Venne\Widgets\WidgetManagerFactory;
+use Venne\Widgets\WidgetManager;
 
 /**
  * @author Josef Kříž <pepakriz@gmail.com>
@@ -26,10 +29,10 @@ class WidgetsExtension extends CompilerExtension
 		$container = $this->getContainerBuilder();
 
 		$container->addDefinition($this->prefix('widgetManager'))
-			->setClass('Venne\Widgets\WidgetManager');
+			->setClass(WidgetManager::class);
 
 		$container->addDefinition($this->prefix('widgetManagerFactory'))
-			->setImplement('Venne\Widgets\IWidgetManagerFactory');
+			->setImplement(WidgetManagerFactory::class);
 	}
 
 	public function beforeCompile()
@@ -39,7 +42,7 @@ class WidgetsExtension extends CompilerExtension
 
 		foreach ($container->findByTag(static::TAG_WIDGET) as $factory => $meta) {
 			if (!is_string($meta)) {
-				throw new \Nette\InvalidArgumentException(sprintf('Tag %s require name. Provide it in configuration. (tags: [venne.widget: name])', static::TAG_WIDGET));
+				throw new InvalidArgumentException(sprintf('Tag %s require name. Provide it in configuration. (tags: [venne.widget: name])', static::TAG_WIDGET));
 			}
 			$config->addSetup('addWidget', array($meta, $factory));
 		}
